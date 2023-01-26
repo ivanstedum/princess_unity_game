@@ -24,6 +24,7 @@ public class videoPlayerMain : MonoBehaviour
         {
             videoPlayer.time = loopStartTime;
             videoPlayer.playbackSpeed = 1f;
+    
             
             
         }
