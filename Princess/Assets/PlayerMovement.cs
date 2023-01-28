@@ -11,6 +11,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpHeight;
     private Animator anim;
     private SpriteRenderer sprite;
+    private CapsuleCollider2D ground;
+    [SerializeField] private LayerMask jumpableGround;
+    
+    // have an array that contains all animation statea
 
     void Start()
     {
@@ -19,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
         playerRb =  GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
+        ground = GetComponent<CapsuleCollider2D>();
     }
 
     // Update is called once per frame
@@ -27,13 +32,25 @@ public class PlayerMovement : MonoBehaviour
         float xDirection = Input.GetAxis("Horizontal");
 
         playerRb.velocity = new Vector3(xDirection * moveSpeed, playerRb.velocity.y, 0);
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && onGround())
         {
             playerRb.velocity = new Vector3(playerRb.velocity.x , jumpHeight, 0);
+            anim.SetTrigger("Jumping");
+            
         }
+    
 
+        if (playerRb.velocity.y < -.1f){
+            anim.SetBool("Falling", true);
+        }
+        if (onGround())
+        {
+            anim.SetBool("Falling", false);
+        }
         updateAnimationState(xDirection);
+
     }
+
 
     void updateAnimationState(float xDirection)
     {
@@ -54,5 +71,12 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("walking", false);
         }
         
+    }
+
+    private bool onGround()
+    {
+        
+        return Physics2D.BoxCast(ground.bounds.center, ground.bounds.size, 0f, Vector2.down, .1f, jumpableGround);
+
     }
 }
