@@ -55,6 +55,10 @@ public class PlayerMovement : MonoBehaviour
     void updateAnimationState(float xDirection)
     {
     
+        if(Input.GetButtonDown("Slash"))
+        {
+            anim.SetTrigger("Slashing");
+        }
 
         if (xDirection > 0f)
         {
