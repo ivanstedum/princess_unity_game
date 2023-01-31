@@ -6,11 +6,14 @@ public class EnemyPatrol : MonoBehaviour
 {
     [SerializeField] private GameObject patrolArea;
     [SerializeField] private float speed = 1f;
+    [SerializeField] private float attackDistance = 4f;
     private bool facingRight = false;
     private Transform playerTransform;
+    private Animator enemyAnimator;
 
   void Start()
 {
+    enemyAnimator = GetComponent<Animator>();
     playerTransform = GameObject.FindWithTag("Player").transform;
     if (playerTransform == null)
     {
@@ -51,9 +54,12 @@ private void Update()
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
             facingRight = false;
         }
-
+        
         // Trigger the running animation
-        GetComponent<Animator>().SetBool("ghostMovesTowardsPlayer", true);
+        if (!enemyAnimator.GetBool("ghostDamage"))
+        {
+            enemyAnimator.SetBool("ghostMovesTowardsPlayer", true);
+        }
     }
     else
     {
