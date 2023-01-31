@@ -22,9 +22,9 @@ public class EnemyHealth : MonoBehaviour
             Animator playerAnimator =  other.collider.GetComponent<Animator>();
             AnimatorStateInfo stateInfo = playerAnimator.GetCurrentAnimatorStateInfo(0);
         
-            if (stateInfo.IsName("princess-slash") && !isDamaged)
+            if (stateInfo.IsName("princess-slash"))
                 {
-                    Debug.Log("work");
+                    
                     health -= damage;
                     EnemyDamage();
                     if (health <= 0)
@@ -32,21 +32,11 @@ public class EnemyHealth : MonoBehaviour
                         enemyAnimator.SetBool("ghostDeath", true);
                     }
                 }
-            else {
-                Debug.Log("not work");
-                enemyAnimator.SetBool("ghostDamage", false);
-            }
+     
         
         }
     }
-    private void Update()
-    {
-        if (isDamaged && !enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("ghostDamage"))
-        {
-            enemyAnimator.SetBool("ghostMovesTowardsPlayer", true);
-            isDamaged = false;
-        }
-    }
+
     private void EnemyDamage()
     {
         Debug.Log("inside");
@@ -54,11 +44,15 @@ public class EnemyHealth : MonoBehaviour
         enemyAnimator.SetBool("ghostDamage", true);
         isDamaged = true;
     }
-    
+    private void ResumeRun()
+    {
+        enemyAnimator.SetBool("ghostMovesTowardsPlayer", true);
+        enemyAnimator.SetBool("ghostDamage", false);
+    }
     private void EnemyDeath()
     {
         gameObject.SetActive(false);
     }
-}
+
 
 }
