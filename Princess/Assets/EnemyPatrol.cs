@@ -10,11 +10,14 @@ public class EnemyPatrol : MonoBehaviour
     private bool facingRight = false;
     private Transform playerTransform;
     private Animator enemyAnimator;
+    private bool isAttacking = false;
 
   void Start()
 {
     enemyAnimator = GetComponent<Animator>();
     playerTransform = GameObject.FindWithTag("Player").transform;
+    isAttacking = FindObjectOfType<EnemyAttack>().isAttacking;
+    Debug.Log(isAttacking);
     if (playerTransform == null)
     {
         Debug.LogError("No GameObject with tag 'Player' found.");
@@ -23,6 +26,7 @@ public class EnemyPatrol : MonoBehaviour
     
 private void Update()
 {
+    isAttacking = FindObjectOfType<EnemyAttack>().isAttacking;
     float minX = patrolArea.GetComponent<BoxCollider2D>().bounds.min.x;
     float maxX = patrolArea.GetComponent<BoxCollider2D>().bounds.max.x;
     float minY = patrolArea.GetComponent<BoxCollider2D>().bounds.min.y;
@@ -41,6 +45,11 @@ private void Update()
         playerTransform.position.y >= minY && playerTransform.position.y <= maxY)
     {
         // Follow the player
+        if (isAttacking)
+        {
+            speed = 0;
+            Debug.Log("please stop");
+        }
         transform.position = Vector2.MoveTowards(transform.position, playerTransform.position, speed * Time.deltaTime);
 
         // Face the player
@@ -56,10 +65,12 @@ private void Update()
         }
         
         // Trigger the running animation
-        if (!enemyAnimator.GetBool("ghostDamage"))
+        if (!enemyAnimator.GetBool("ghostDamage") &  enemyAnimator.GetBool("ghostAttacks") )
         {
+            speed = 1f;
             enemyAnimator.SetBool("ghostMovesTowardsPlayer", true);
         }
+        // Now we need to make the enemy stop if player is within a certain distance
     }
     else
     {
