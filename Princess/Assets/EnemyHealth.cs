@@ -29,7 +29,8 @@ public class EnemyHealth : MonoBehaviour
                     EnemyDamage();
                     if (health <= 0)
                     {
-                        enemyAnimator.SetBool("ghostDeath", true);
+                        enemyAnimator.SetTrigger("ghostDeath");
+                        EnemyDeath();
                     }
                 }
      

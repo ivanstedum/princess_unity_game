@@ -44,6 +44,7 @@ private void Update()
     if (playerTransform.position.x >= minX && playerTransform.position.x <= maxX &&
         playerTransform.position.y >= minY && playerTransform.position.y <= maxY)
     {
+        
         // Follow the player
         if (isAttacking)
         {
@@ -65,7 +66,7 @@ private void Update()
         }
         
         // Trigger the running animation
-        if (!enemyAnimator.GetBool("ghostDamage") &  enemyAnimator.GetBool("ghostAttacks") )
+        if (!enemyAnimator.GetBool("ghostDamage") &  !enemyAnimator.GetBool("ghostAttacks") )
         {
             speed = 1f;
             enemyAnimator.SetBool("ghostMovesTowardsPlayer", true);
