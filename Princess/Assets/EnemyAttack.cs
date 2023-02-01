@@ -9,10 +9,11 @@ public class EnemyAttack : MonoBehaviour
     private Transform playerTransform;
     private Animator enemyAnimator;
     public bool isAttacking;
-    private float cooldownTimer = Mathf.Infinity;
+    public float cooldownTimer;
 
     void Start()
     {
+        cooldownTimer = attackCooldown;
         playerTransform = GameObject.FindWithTag("Player").transform;
         enemyAnimator = GetComponent<Animator>();
     }
@@ -20,9 +21,17 @@ public class EnemyAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        EnemyAttacking();
+    }
+    private void EnemyAttacking()
+    {
         cooldownTimer -= Time.deltaTime;
-
-        if(Vector3.Distance(transform.position, playerTransform.position) < 3 && cooldownTimer >= attackCooldown)
+        if(cooldownTimer <= 0)
+        {
+            cooldownTimer = attackCooldown;
+            enemyAnimator.Play("ghost-attack", -1, 0f);
+        }
+        else if(Vector3.Distance(transform.position, playerTransform.position) < 3)
         {
             Debug.Log("cooldownTimer");
             Debug.Log(cooldownTimer);
@@ -39,12 +48,15 @@ public class EnemyAttack : MonoBehaviour
     }
     private void AnimationWhenAttacking()
     {
+        
         enemyAnimator.SetBool("ghostAttacks", true);
         enemyAnimator.SetBool("ghostMovesTowardsPlayer", false);
+        
+        
+        
     }
     private void AnimationNotAttacking()
     {
         enemyAnimator.SetBool("ghostAttacks", false);
-        enemyAnimator.SetBool("ghostMovesTowardsPlayer", true);
     }
 }
