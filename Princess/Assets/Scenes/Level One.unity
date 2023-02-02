@@ -3145,8 +3145,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93121b75931f04c06bc513522990ee99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 10000
   damage: 50
+  EnemyDamageAreaObj: {fileID: 1831369596}
+  playerAnimator: {fileID: 1304949405}
 --- !u!114 &1238840619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6545,6 +6547,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1831369597}
   - component: {fileID: 1831369598}
+  - component: {fileID: 1831369599}
   m_Layer: 0
   m_Name: enemyDamageArea
   m_TagString: Untagged
@@ -6593,6 +6596,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.4787636, y: 1.7295425}
   m_EdgeRadius: 0
+--- !u!114 &1831369599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831369596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6da6a3e3aa6840fca6f0d75a673fdc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inEnemyDamageArea: 0
 --- !u!1 &1844882588
 GameObject:
   m_ObjectHideFlags: 0
