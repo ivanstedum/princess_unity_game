@@ -8,23 +8,62 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private int damage;
     private Animator enemyAnimator;
     private bool isDamaged = false;
-
+    private EnemyDamageArea EnemyDamageArea;
+    [SerializeField] private GameObject EnemyDamageAreaObj;
+    [SerializeField] private Animator playerAnimator;
+    public int EnemyHealthAmount
+    {
+        get
+        {
+            return health;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
         enemyAnimator = GetComponent<Animator>();
+        EnemyDamageArea = EnemyDamageAreaObj.GetComponent<EnemyDamageArea>();
+        
     }
-    
-    private void OnCollisionStay2D(Collision2D other) {
+    void Update()
+    {
         
-        if(other.collider.CompareTag("Player"))
+        if (EnemyDamageArea.InEnemyDamageArea)
         {
-            Animator playerAnimator =  other.collider.GetComponent<Animator>();
-            AnimatorStateInfo stateInfo = playerAnimator.GetCurrentAnimatorStateInfo(0);
+            attackingEnemy();
+        }
+    }
+    // private void OnCollisionStay2D(Collision2D other) {
         
+    //     if(other.collider.CompareTag("Player"))
+    //     {
+    //         Animator playerAnimator =  other.collider.GetComponent<Animator>();
+    //         AnimatorStateInfo stateInfo = playerAnimator.GetCurrentAnimatorStateInfo(0);
+        
+    //         if (stateInfo.IsName("princess-slash"))
+    //             {
+                    
+    //                 health -= damage;
+    //                 EnemyDamage();
+    //                 if (health <= 0)
+    //                 {
+    //                     enemyAnimator.SetTrigger("ghostDeath");
+    //                     EnemyDeath();
+    //                 }
+    //             }
+     
+        
+    //     }
+    // }
+    private void attackingEnemy()
+    {
+        if(EnemyDamageArea.InEnemyDamageArea)
+        {
+            AnimatorStateInfo stateInfo = playerAnimator.GetCurrentAnimatorStateInfo(0);
+            
             if (stateInfo.IsName("princess-slash"))
                 {
-                    
+                    Debug.Log("here");
                     health -= damage;
                     EnemyDamage();
                     if (health <= 0)
@@ -33,11 +72,8 @@ public class EnemyHealth : MonoBehaviour
                         EnemyDeath();
                     }
                 }
-     
-        
         }
     }
-
     private void EnemyDamage()
     {
         Debug.Log("inside");
