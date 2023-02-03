@@ -3145,7 +3145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93121b75931f04c06bc513522990ee99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10000
+  health: 100
   damage: 50
   EnemyDamageAreaObj: {fileID: 1831369596}
   playerAnimator: {fileID: 1304949405}
