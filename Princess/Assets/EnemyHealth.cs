@@ -64,16 +64,16 @@ public class EnemyHealth : MonoBehaviour
           
             if (Input.GetButtonDown("Slash"))
                 {
-                    var ghostIsDying = enemyAnimator.GetBool("isDying");
+                    var ghostIsDying = enemyAnimator.GetBool("ghostDying");
                     Debug.Log($"Debug Current Ghost Dying: {ghostIsDying}");
-                    if(enemyAnimator.GetBool("isDying"))
+                    if(enemyAnimator.GetBool("ghostDying"))
                     {
                         
                     }
                 
-                    else if (health == 0)
+                    else if (health - damage == 0 )
                     {
-                        
+                        health -= damage;
                         enemyAnimator.SetTrigger("ghostDeath");
                         enemyAnimator.SetBool("isDying", true);
                         
@@ -92,6 +92,7 @@ public class EnemyHealth : MonoBehaviour
 
     private void EnemyDamage()
     {
+        enemyAnimator.SetTrigger("hurt");
         Debug.Log("inside");
         enemyAnimator.SetBool("ghostMovesTowardsPlayer", false);
         enemyAnimator.SetBool("ghostDamage", true);
