@@ -51,7 +51,7 @@ public class EnemyHealth : MonoBehaviour
     //                     EnemyDeath();
     //                 }
     //             }
-     
+    
         
     //     }
     // }
@@ -61,19 +61,35 @@ public class EnemyHealth : MonoBehaviour
         {
             AnimatorStateInfo stateInfo = playerAnimator.GetCurrentAnimatorStateInfo(0);
             
-            if (stateInfo.IsName("princess-slash"))
+          
+            if (Input.GetButtonDown("Slash"))
                 {
-                    Debug.Log("here");
-                    health -= damage;
-                    EnemyDamage();
-                    if (health <= 0)
+                    var ghostIsDying = enemyAnimator.GetBool("isDying");
+                    Debug.Log($"Debug Current Ghost Dying: {ghostIsDying}");
+                    if(enemyAnimator.GetBool("isDying"))
                     {
-                        enemyAnimator.SetTrigger("ghostDeath");
-                        EnemyDeath();
+                        
                     }
+                
+                    else if (health == 0)
+                    {
+                        
+                        enemyAnimator.SetTrigger("ghostDeath");
+                        enemyAnimator.SetBool("isDying", true);
+                        
+                    }
+                    
+                    else if (health > 0)
+                    {
+                        Debug.Log("here");
+                        health -= damage;
+                        EnemyDamage();
+                    }
+                
                 }
         }
     }
+
     private void EnemyDamage()
     {
         Debug.Log("inside");
