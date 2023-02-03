@@ -21,10 +21,15 @@ public class EnemyAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(enemyAnimator.GetBool("isDying"));
         if(!enemyAnimator.GetBool("isDying"))
         {
             EnemyAttacking();
 
+        }
+        else
+        {
+            enemyAnimator.SetBool("ghostAttacks", false);
         }
         
     }
