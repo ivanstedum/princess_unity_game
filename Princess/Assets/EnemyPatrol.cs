@@ -11,7 +11,13 @@ public class EnemyPatrol : MonoBehaviour
     private Transform playerTransform;
     private Animator enemyAnimator;
     private bool isAttacking = false;
-
+    public bool EnemyFacingRight
+    {
+        get
+        {
+            return facingRight;
+        }
+    }
   void Start()
 {
     enemyAnimator = GetComponent<Animator>();
