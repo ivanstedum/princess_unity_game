@@ -9,7 +9,8 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] private GameObject[] fireballs;
     [SerializeField] private Transform firePoint;
     [SerializeField] private float fireSpeed;
-    private Transform playerTransform;
+    [SerializeField] private int enemyDamage;
+    private GameObject player;
     private Animator enemyAnimator;
     private EnemyFire enemyFire;
     private float enemyFacing;
@@ -17,11 +18,17 @@ public class EnemyAttack : MonoBehaviour
     
     public bool isAttacking;
     public float cooldownTimer;
-
+    public int EnemyDamage
+    {
+        get
+        {
+            return enemyDamage;
+        }
+    }
     void Start()
     {
         cooldownTimer = attackCooldown;
-        playerTransform = GameObject.FindWithTag("Player").transform;
+        player= GameObject.FindWithTag("Player");
         enemyAnimator = GetComponent<Animator>();
         canShootFire = false;
         
@@ -53,7 +60,7 @@ public class EnemyAttack : MonoBehaviour
             cooldownTimer = attackCooldown;
             enemyAnimator.Play("ghost-attack", -1, 0f);
         }
-        else if(Vector3.Distance(transform.position, playerTransform.position) < 6)
+        else if(Vector3.Distance(transform.position, player.transform.position) < 6)
         {
             Debug.Log("cooldownTimer");
             Debug.Log(cooldownTimer);
@@ -106,6 +113,10 @@ public class EnemyAttack : MonoBehaviour
 
         {
             fireballs[0].SetActive(false);
+        }
+        if(enemyFire.fireHitsSomething && enemyFire.fhitsPlayer)
+        {
+            player.GetComponent<PlayerHealth>().TakeDamage(enemyDamage);
         }
         
 
