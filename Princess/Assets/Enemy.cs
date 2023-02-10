@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
     [Header("Player Layer")]
     [SerializeField] private LayerMask playerLayer;
     private float cooldownTimer = Mathf.Infinity;
-
+    private bool isAttacking = false;
     int facingDirection = 1;
     private Animator anim;
     private PlayerHealth playerHealth;
@@ -30,12 +30,20 @@ public class Enemy : MonoBehaviour
 
         }
     }
+    
     public int EnemyDamage
     {
         get
         {
             return damage;
 
+        }
+    }
+    public bool IsAttacking
+    {
+        get
+        {
+            return isAttacking;
         }
     }
 
@@ -69,6 +77,7 @@ public class Enemy : MonoBehaviour
         cooldownTimer = 0;
         fireballs[FindFireball()].transform.position = firepoint.position;
         fireballs[FindFireball()].GetComponent<EnemyFire>().ActivateProjectile();
+        isAttacking = true;
     }
     private int FindFireball()
     {
@@ -79,7 +88,7 @@ public class Enemy : MonoBehaviour
         }
         return 0;
     }
-    private bool PlayerInSight()
+    public bool PlayerInSight()
     {
     
         if (transform.localScale.x < 0)
