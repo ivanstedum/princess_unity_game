@@ -30,6 +30,14 @@ public class Enemy : MonoBehaviour
 
         }
     }
+    public int EnemyDamage
+    {
+        get
+        {
+            return damage;
+
+        }
+    }
 
     private void Awake()
     {
@@ -48,6 +56,7 @@ public class Enemy : MonoBehaviour
             {
                 cooldownTimer = 0;
                 anim.SetTrigger("attack");
+                Debug.Log("shoot");
             }
         }
 
@@ -55,6 +64,8 @@ public class Enemy : MonoBehaviour
     }
     private void ShootFireBall()
     {
+        int firebal = FindFireball();
+        Debug.Log($"fireball is on: {firebal}");
         cooldownTimer = 0;
         fireballs[FindFireball()].transform.position = firepoint.position;
         fireballs[FindFireball()].GetComponent<EnemyFire>().ActivateProjectile();
