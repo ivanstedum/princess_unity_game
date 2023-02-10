@@ -6,7 +6,7 @@ public class EnemyPatrol : MonoBehaviour
 {
     [SerializeField] private GameObject patrolArea;
     [SerializeField] private float speed = 1f;
-    [SerializeField] private float attackDistance = 4f;
+   //[SerializeField] private float attackDistance = 4f;
     private bool facingRight = false;
     private Transform playerTransform;
     private Animator enemyAnimator;
@@ -22,8 +22,8 @@ public class EnemyPatrol : MonoBehaviour
 {
     enemyAnimator = GetComponent<Animator>();
     playerTransform = GameObject.FindWithTag("Player").transform;
-    isAttacking = FindObjectOfType<EnemyAttack>().isAttacking;
-    Debug.Log(isAttacking);
+    
+    
     if (playerTransform == null)
     {
         Debug.LogError("No GameObject with tag 'Player' found.");
@@ -32,7 +32,9 @@ public class EnemyPatrol : MonoBehaviour
     
 private void Update()
 {
-    isAttacking = FindObjectOfType<EnemyAttack>().isAttacking;
+    //isAttacking = FindObjectOfType<EnemyAttack>().isAttacking;
+    isAttacking = gameObject.GetComponent<Enemy>().PlayerInSight();
+    Debug.Log($"you should now see that player is in bounds: {isAttacking}");
     float minX = patrolArea.GetComponent<BoxCollider2D>().bounds.min.x;
     float maxX = patrolArea.GetComponent<BoxCollider2D>().bounds.max.x;
     float minY = patrolArea.GetComponent<BoxCollider2D>().bounds.min.y;
@@ -47,16 +49,23 @@ private void Update()
     float targetX = facingRight ? maxX : minX;
 
     // Check if the player is within the patrol area
-    if (playerTransform.position.x >= minX && playerTransform.position.x <= maxX &&
+    if(isAttacking)
+    {
+        speed = 0;
+        enemyAnimator.SetBool("angry", false);
+        enemyAnimator.SetTrigger("attack");
+
+    }
+    else if (playerTransform.position.x >= minX && playerTransform.position.x <= maxX &&
         playerTransform.position.y >= minY && playerTransform.position.y <= maxY)
     {
         
         // Follow the player
-        if (isAttacking)
-        {
-            speed = 0;
-            Debug.Log("please stop");
-        }
+        // if (isAttacking)
+        // {
+        //     speed = 0;
+        //     Debug.Log("please stop");
+        // }
         transform.position = Vector2.MoveTowards(transform.position, playerTransform.position, speed * Time.deltaTime);
 
         // Face the player
@@ -72,10 +81,10 @@ private void Update()
         }
         
         // Trigger the running animation
-        if (!enemyAnimator.GetBool("ghostDamage") &  !enemyAnimator.GetBool("ghostAttacks") )
+        if (!enemyAnimator.GetBool("hurt")  )
         {
             speed = 1f;
-            enemyAnimator.SetBool("ghostMovesTowardsPlayer", true);
+            enemyAnimator.SetBool("angry", true);
         }
         // Now we need to make the enemy stop if player is within a certain distance
     }
@@ -85,7 +94,7 @@ private void Update()
         transform.position = Vector2.MoveTowards(transform.position, new Vector2(targetX, transform.position.y), speed * Time.deltaTime);
 
         // Stop the running animation
-        GetComponent<Animator>().SetBool("ghostMovesTowardsPlayer", false);
+        GetComponent<Animator>().SetBool("angry", false);
     }
 }
 
