@@ -9,19 +9,27 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float attackCooldown;
     [SerializeField] private float range;
     [SerializeField] private int damage;
-
+    [SerializeField] private GameObject [] fireballs;
+    [SerializeField] private Transform firepoint;
     [Header("Collider Parameters")]
     [SerializeField] private float colliderDistance;
     [SerializeField] private BoxCollider2D boxCollider;
-
+    
     [Header("Player Layer")]
     [SerializeField] private LayerMask playerLayer;
     private float cooldownTimer = Mathf.Infinity;
 
-    
+    int facingDirection = 1;
     private Animator anim;
     private PlayerHealth playerHealth;
+    public int FacingDirection
+    {
+        get
+        {
+            return facingDirection;
 
+        }
+    }
 
     private void Awake()
     {
@@ -45,19 +53,40 @@ public class Enemy : MonoBehaviour
 
 
     }
-
+    private void ShootFireBall()
+    {
+        cooldownTimer = 0;
+        fireballs[FindFireball()].transform.position = firepoint.position;
+        fireballs[FindFireball()].GetComponent<EnemyFire>().ActivateProjectile();
+    }
+    private int FindFireball()
+    {
+        for (int i = 0; i < fireballs.Length; i++)
+        {
+            if (!fireballs[i].activeInHierarchy)
+                return i;
+        }
+        return 0;
+    }
     private bool PlayerInSight()
     {
-        int facingDirection = 1;
+    
         if (transform.localScale.x < 0)
         {
             facingDirection = -1;
+            
         }
-
-        RaycastHit2D hit = 
-        Physics2D.BoxCast(boxCollider.bounds.center + facingDirection * range * transform.right * transform.localScale.x * colliderDistance,
-        new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z),
-        0, Vector2.right * facingDirection, 0, playerLayer);
+        else
+        {
+            facingDirection = 1;
+            
+        }
+        // -1 means direction is right, 1 is left
+    RaycastHit2D hit = 
+            Physics2D.BoxCast(boxCollider.bounds.center + 1 * range * transform.right * transform.localScale.x * colliderDistance,
+            new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z),
+            0, Vector2.right * facingDirection, 0, playerLayer);
+        
         
         Debug.DrawRay(boxCollider.bounds.center + Vector3.right * range * transform.localScale.x * colliderDistance, new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z), Color.red, 5f);
         if (hit.collider != null)
