@@ -9,17 +9,36 @@ public class EnemyFire : EnemyDamage
     private float lifetime;
     private Animator anim;
     private BoxCollider2D coll;
-
+    private GameObject enemy;
     private bool hit;
     
     private void Awake()
     {
         anim = GetComponent<Animator>();
         coll = GetComponent<BoxCollider2D>();
+        enemy = GameObject.Find("Ghost");
     }
 
     public void ActivateProjectile()
     {
+         gameObject.SetActive(true);
+
+        int facingDirection= enemy.GetComponent<Enemy>().FacingDirection;
+        if(facingDirection == -1)// ghost is facing right
+        {
+        
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+             speed = Mathf.Abs(speed);
+
+        }
+        else if(facingDirection == 1)
+        {
+           
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            speed = -Mathf.Abs(speed);
+
+        }
+        
         hit = false;
         lifetime = 0;
         gameObject.SetActive(true);
@@ -38,11 +57,17 @@ public class EnemyFire : EnemyDamage
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        hit = true;
-        base.OnTriggerEnter2D(collision); //Execute logic from parent script first
-        coll.enabled = false;
-    
-        gameObject.SetActive(false); //When this hits any object deactivate arrow
+        if(collision.tag != "enemy")
+        {
+            hit = true;
+            Debug.Log("enemy hit");
+            base.OnTriggerEnter2D(collision); //Execute logic from parent script first
+            coll.enabled = false;
+        
+            gameObject.SetActive(false); //When this hits any object deactivate arrow
+
+        }
+        
     }
     private void Deactivate()
     {
