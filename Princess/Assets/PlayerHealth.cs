@@ -6,10 +6,19 @@ public class PlayerHealth : MonoBehaviour
 {
     // Start is called before the first frame update
    [SerializeField] private float startingHealth;
+   [SerializeField] private int playerDamage;
     public float currentHealth { get; private set; }
+    
     private Animator anim;
     private bool dead;
+    public int PlayerDamage
+    {
+        get
+        {
+            return playerDamage;
 
+        }
+    }
     private void Awake()
     {
         currentHealth = startingHealth;
