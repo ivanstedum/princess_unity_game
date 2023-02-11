@@ -7,7 +7,7 @@ public class PlayerHealth : MonoBehaviour
     // Start is called before the first frame update
    [SerializeField] private float startingHealth;
    [SerializeField] private int playerDamage;
-    public float currentHealth { get; private set; }
+    public float currentHealth;
     
     private Animator anim;
     private bool dead;
@@ -45,6 +45,7 @@ public class PlayerHealth : MonoBehaviour
     }
     public void AddHealth(float _value)
     {
-        currentHealth = Mathf.Clamp(currentHealth + _value, 0, startingHealth);
+        //currentHealth = Mathf.Clamp(currentHealth + _value, 0, startingHealth);
+        currentHealth = currentHealth + _value;
     }
 }
