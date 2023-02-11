@@ -97,7 +97,6 @@ public class Enemy : MonoBehaviour
     private void ShootFireBall()
     {
         int firebal = FindFireball();
-        Debug.Log($"fireball is on: {firebal}");
         cooldownTimer = 0;
         fireballs[FindFireball()].transform.position = firepoint.position;
         fireballs[FindFireball()].GetComponent<EnemyFire>().ActivateProjectile();
@@ -194,7 +193,7 @@ public class Enemy : MonoBehaviour
                 
             anim.SetBool("angry", true);
             bool angry = anim.GetBool("angry");
-            Debug.Log($"enemy is angry: {angry}");
+            
         }
         else
         {
@@ -210,7 +209,7 @@ public class Enemy : MonoBehaviour
             AnimatorStateInfo stateInfo = playerAnimator.GetCurrentAnimatorStateInfo(0);
             if(Input.GetButtonDown("Slash"))
             {
-                Debug.Log("ouch");
+                
                 if(health == 0)
                 {
                     anim.SetTrigger("death");
