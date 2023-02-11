@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -40,12 +41,18 @@ public class PlayerHealth : MonoBehaviour
                 anim.SetTrigger("die");
                 GetComponent<PlayerMovement>().enabled = false;
                 dead = true;
-            }
+                Debug.Log(anim.GetCurrentAnimatorStateInfo(0).normalizedTime );
+            
         }
+    }
     }
     public void AddHealth(float _value)
     {
         //currentHealth = Mathf.Clamp(currentHealth + _value, 0, startingHealth);
         currentHealth = currentHealth + _value;
+    }
+    private void ResetLevel() 
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
