@@ -57,10 +57,10 @@ public class EnemyFire : EnemyDamage
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag != "enemy")
+        if(collision.tag == "Player")
         {
             hit = true;
-            Debug.Log("enemy hit");
+            Debug.Log("enemy");
             base.OnTriggerEnter2D(collision); //Execute logic from parent script first
             coll.enabled = false;
         
