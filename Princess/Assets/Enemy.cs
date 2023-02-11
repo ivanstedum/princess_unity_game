@@ -30,6 +30,14 @@ public class Enemy : MonoBehaviour
     private bool facingRight = false;
     private Transform playerTransform;
     private Animator enemyAnimator;
+
+    [Header("Enemy Health")]
+    private EnemyDamageArea EnemyDamageArea;
+    [SerializeField] private GameObject EnemyDamageAreaObj;
+    [SerializeField] private int health;
+    [SerializeField] private Animator playerAnimator;
+    [SerializeField] private GameObject player;
+    private bool isDamaged = false;
     
     public int FacingDirection
     {
@@ -60,16 +68,18 @@ public class Enemy : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         playerTransform = GameObject.FindWithTag("Player").transform;
+        EnemyDamageArea = EnemyDamageAreaObj.GetComponent<EnemyDamageArea>();
         
     }
 
     private void Update()
     {
         cooldownTimer += Time.deltaTime;
-
+        PlayerAttacking();
         //Attack only when player in sight?
         if (PlayerInSight())
         {
+            anim.SetBool("angry", false);
             if (cooldownTimer >= attackCooldown)
             {
                 cooldownTimer = 0;
@@ -163,10 +173,11 @@ public class Enemy : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, new Vector2(targetX, transform.position.y), speed * Time.deltaTime);
         // now we need to add code to make enemy move towards player
         if (playerTransform.position.x >= minX && playerTransform.position.x <= maxX &&
-        playerTransform.position.y >= minY && playerTransform.position.y <= maxY)
+        playerTransform.position.y >= minY && playerTransform.position.y <= maxY )
         {
             speed = 0.8f;
-            transform.position = Vector2.MoveTowards(transform.position, playerTransform.position, speed * Time.deltaTime);
+            var playerXPos = new Vector3(playerTransform.position.x, transform.position.y, transform.position.z);
+            transform.position = Vector2.MoveTowards(transform.position, playerXPos, speed * Time.deltaTime);
 
             // Face the player
             if (playerTransform.position.x > transform.position.x && !facingRight)
@@ -179,7 +190,48 @@ public class Enemy : MonoBehaviour
                 transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
                 facingRight = false;
             }
-
+            
+                
+            anim.SetBool("angry", true);
+            bool angry = anim.GetBool("angry");
+            Debug.Log($"enemy is angry: {angry}");
+        }
+        else
+        {
+            anim.SetBool("angry", false);
         }
 }
+
+
+    private void PlayerAttacking()
+    {
+        if(EnemyDamageArea.InEnemyDamageArea)
+        {
+            AnimatorStateInfo stateInfo = playerAnimator.GetCurrentAnimatorStateInfo(0);
+            if(Input.GetButtonDown("Slash"))
+            {
+                Debug.Log("ouch");
+                if(health == 0)
+                {
+                    anim.SetTrigger("death");
+                }
+                if(health > 0)
+                {
+                    anim.SetTrigger("hurt");
+                    health -= player.GetComponent<PlayerHealth>().PlayerDamage;
+                }
+            
+
+            }
+
+        }
+    }
+    private void EnemyDeath()
+    {
+        gameObject.SetActive(false);
+    }
+
+
+///////////////////Enemy Health
+
 }
