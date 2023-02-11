@@ -9,14 +9,14 @@ public class EnemyFire : EnemyDamage
     private float lifetime;
     private Animator anim;
     private BoxCollider2D coll;
-    private GameObject enemy;
+    [SerializeField] private GameObject enemy;
     private bool hit;
     
     private void Awake()
     {
         anim = GetComponent<Animator>();
         coll = GetComponent<BoxCollider2D>();
-        enemy = GameObject.Find("Ghost");
+    
     }
 
     public void ActivateProjectile()
