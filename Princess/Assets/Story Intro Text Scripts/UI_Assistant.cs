@@ -5,28 +5,34 @@ using UnityEngine.UI;
 using TMPro;
 public class UI_Assistant : MonoBehaviour
 {
+[SerializeField] float speed;
+[SerializeField] GameObject textObject;
+TextMeshProUGUI txt;
+string story;
+bool playText = true;
 
+void Awake () 
+{
+    txt = textObject.GetComponent<TextMeshProUGUI>();
+    story = txt.text;
+    txt.text = "";
+}
 
-    TextMeshProUGUI txt;
-    string story;
-
-    void Awake () 
+void Update() 
+{
+    if (playText) 
     {
-        txt = GetComponent<TextMeshProUGUI>();
-        story = txt.text;
-        txt.text = "";
-
-        // TODO: add optional delay when to start
         StartCoroutine ("PlayText");
+        playText = false;
     }
+}
 
-    IEnumerator PlayText()
+IEnumerator PlayText()
+{
+    foreach (char c in story) 
     {
-        foreach (char c in story) 
-        {
-            txt.text += c;
-            yield return new WaitForSeconds (0.125f);
-        }
+        txt.text += c;
+        yield return new WaitForSeconds (speed);
     }
-
+}
 }

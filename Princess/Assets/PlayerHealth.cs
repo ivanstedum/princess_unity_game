@@ -53,6 +53,7 @@ public class PlayerHealth : MonoBehaviour
     }
     private void ResetLevel() 
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene("Game Over");
     }
 }

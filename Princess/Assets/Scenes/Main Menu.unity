@@ -318,8 +318,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Play
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 49d3b9714a081442d97105931ec3b2f7, type: 2}
-  m_sharedMaterial: {fileID: 7201866476273460562, guid: 49d3b9714a081442d97105931ec3b2f7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 74d8fef34adce4dd1ab8ecd35904dd58, type: 2}
+  m_sharedMaterial: {fileID: 7201866476273460562, guid: 74d8fef34adce4dd1ab8ecd35904dd58, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1070,7 +1070,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 8400000, guid: 62ea23e76c2494004bf219892408199d, type: 2}
+  m_Texture: {fileID: 2800000, guid: c14c1eb52cfd24e40893edf41b5adef9, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -1141,7 +1141,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1206,7 +1206,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!328 &545747232
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -1855,6 +1855,7 @@ GameObject:
   - component: {fileID: 1199954226}
   - component: {fileID: 1199954225}
   - component: {fileID: 1199954228}
+  - component: {fileID: 1199954229}
   m_Layer: 5
   m_Name: End Button
   m_TagString: Untagged
@@ -1926,7 +1927,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1199954226}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1199954229}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: EndPrincessGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1199954226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1985,6 +1998,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1199954229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1199954223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f71d2ba5603c4bf6b416e1dd8104003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1306133415
 GameObject:
   m_ObjectHideFlags: 0
@@ -2267,6 +2292,7 @@ GameObject:
   - component: {fileID: 1421221489}
   - component: {fileID: 1421221493}
   - component: {fileID: 1421221494}
+  - component: {fileID: 1421221495}
   m_Layer: 5
   m_Name: Play Button
   m_TagString: Untagged
@@ -2338,7 +2364,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1421221490}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1421221495}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: LoadStory
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1421221490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2409,6 +2447,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1421221495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421221487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f71d2ba5603c4bf6b416e1dd8104003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1761647657
 GameObject:
   m_ObjectHideFlags: 0
@@ -2561,7 +2611,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!328 &1849465738
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -3033,7 +3083,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: C
+  m_text: Z
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49d3b9714a081442d97105931ec3b2f7, type: 2}
   m_sharedMaterial: {fileID: 7201866476273460562, guid: 49d3b9714a081442d97105931ec3b2f7, type: 2}
