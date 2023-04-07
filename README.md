@@ -13,4 +13,4 @@ Aseprite
 
 ## Instructions on Set-UP
 
-This is a game and can be played just by going to a link that will be given when the game is created
+This is a game and can be played in itch.io with link here: https://elegantxprincess.itch.io/princess
